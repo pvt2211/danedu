@@ -1,6 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTfDbP-wcbneD6qK5WcHpOq4-L-Jxl9j8",
@@ -14,7 +18,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getFirestore(app);
-const authenticate = getAuth();
+const auth = getAuth();
 
 async function getCities(db) {
   const citiesCol = collection(db, "cities");
@@ -24,7 +28,7 @@ async function getCities(db) {
 }
 
 async function createAccount(email, password) {
-  await createUserWithEmailAndPassword(authenticate, email, password)
+  await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       userCredential.user;
@@ -38,4 +42,11 @@ async function createAccount(email, password) {
     });
 }
 
-export { getCities, database, createAccount };
+export {
+  getCities,
+  database,
+  createAccount,
+  createUserWithEmailAndPassword,
+  auth,
+  updateProfile,
+};
